@@ -1,0 +1,39 @@
+Phase 1: Core Features
+ Create vector<Student> students
+ Add student
+ Display all students
+ Search by roll number
+ Edit student
+ Delete student
+ Sort by name
+ Sort by marks
+
+Phase 2: Validation
+ Prevent duplicate roll numbers
+ Marks must be between 0 and 100
+ Roll number must be positive
+
+Phase 3: Statistics
+ Highest marks
+ Lowest marks
+ Average marks
+ Number of students
+
+Phase 4: Persistence
+ Save students to file
+ Load students from file on startup
+
+Phase 5: OOP Improvements
+ Encapsulate data completely
+ Make members private
+ Use getters/setters
+ Separate into:
+Student.h
+Student.cpp
+main.cpp
+
+Phase 6: GUI Version (Later)
+ Learn Qt
+ Create forms
+ Connect buttons to functions
+ Replace file storage with SQLite

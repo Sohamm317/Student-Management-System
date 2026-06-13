@@ -1,4 +1,7 @@
-#include<bits/stdc++.h>
+#include<iostream>
+#include<vector>
+#include<algorithm>
+#include<string>
 
 using namespace std;
 
@@ -75,6 +78,25 @@ void display(const vector<Student>& students) {
 
 int main()
 {
-    
+    vector<Student> students;
+
+    students.push_back(Student("Rahul", 80, 101));
+    students.push_back(Student("Aman", 95, 102));
+    students.push_back(Student("Soham", 75, 103));
+
+    cout << endl << "Original Data:" << endl;
+    display(students);
+
+    sortByNameAscending(students);
+
+    cout << endl << "Sorted By Name:" << endl;
+    display(students);
+
+    sortByMarksDescending(students);
+
+    cout << endl << "Sorted By Marks:" << endl;;
+    display(students);
+
+    cout << endl << "Total Students: " << Student::get_count() << endl;
     return 0;
 }

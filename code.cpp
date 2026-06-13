@@ -72,8 +72,47 @@ void display(const vector<Student>& students) {
     for(const Student& s : students) {
         cout << "Name        : " << s.get_name() << endl;
         cout << "Roll Number : " << s.get_roll_number() << endl;
-        cout << "Marks       : " << s.get_marks() << endl << endl;
+        cout << "Marks       : " << s.get_marks() << endl << endl << endl;
     }
+}
+
+void addStudent(vector<Student>& students) {
+    string name;
+    float marks;
+    int roll_number;
+
+    cout << "Enter Name: ";
+    cin.ignore();
+    getline(cin, name);
+
+    cout << "Enter Marks: ";
+    cin >> marks;
+
+    cout << "Enter Roll Number: ";
+    cin >> roll_number;
+
+    students.push_back(Student(name, marks, roll_number));
+
+    cout << "Student Added Successfully" << endl;
+}
+
+Student* SearchStudent(vector<Student>& students, int roll_number) {
+    for(Student& s : students) {
+        if(s.get_roll_number() == roll_number)
+            return &s;
+    }
+    return nullptr;
+}
+
+void deleteStudent(vector<Student>& students, int roll_num) {
+    for(auto it = students.begin(); it != students.end(); it++) {
+        if(it->get_roll_number() == roll_num) {
+            students.erase(it);
+            cout << "Student Deleted Successfully" << endl;
+            return;
+        }
+    }
+    cout << "Student Not Found" << endl;
 }
 
 int main()

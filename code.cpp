@@ -61,7 +61,7 @@ void sortByMarksDescending (vector<Student>& students) {
     sort(students.begin(), students.end(), compare_by_marks);
 }
 
-void display(const vector<Student>& students) {
+void displayStudents(const vector<Student>& students) {
     if(students.empty()) {
         cout << endl << "No Students Found" << endl;
         return;
@@ -96,7 +96,7 @@ void addStudent(vector<Student>& students) {
     cout << "Student Added Successfully" << endl;
 }
 
-Student* SearchStudent(vector<Student>& students, int roll_number) {
+Student* searchStudent(vector<Student>& students, int roll_number) {
     for(Student& s : students) {
         if(s.get_roll_number() == roll_number)
             return &s;
@@ -117,25 +117,68 @@ void deleteStudent(vector<Student>& students, int roll_num) {
 
 int main()
 {
-    vector<Student> students;
+    int choice;
+    vector<Student> students; 
 
-    students.push_back(Student("Rahul", 80, 101));
-    students.push_back(Student("Aman", 95, 102));
-    students.push_back(Student("Soham", 75, 103));
+    do {
+        cout << endl << "Student Management System" << endl;
+        cout << "1. Add Student" << endl;
+        cout << "2. Display Students" << endl;
+        cout << "3. Search Student" << endl;
+        cout << "4. Delete Student" << endl;
+        cout << "5. Sort by Name" << endl;
+        cout << "6. Sort by Marks" << endl;
+        cout << "7. Exit" << endl;
 
-    cout << endl << "Original Data:" << endl;
-    display(students);
+        cout << endl << "Enter Choice : ";
+        cin >> choice;
 
-    sortByNameAscending(students);
+        switch(choice) {
+            case 1:
+                addStudent(students);
+                break;
+            case 2:
+                displayStudents(students);
+                break;
+            case 3:
+                int roll;
+                cout << "Enter Roll Number: ";
+                cin >> roll;
 
-    cout << endl << "Sorted By Name:" << endl;
-    display(students);
+                Student* s = searchStudent(students, roll);
 
-    sortByMarksDescending(students);
+                if(s)
+                {
+                    cout << endl << "Student Found" << endl;
+                    cout << "Name: " << s->get_name() << endl;
+                } else {
+                    cout << "Student Not Found" << endl;
+                }
 
-    cout << endl << "Sorted By Marks:" << endl;;
-    display(students);
+                break;
+            case 4:
+                int roll;
+                cout << "Enter Roll Number: ";
+                cin >> roll;
 
-    cout << endl << "Total Students: " << Student::get_count() << endl;
+                deleteStudent(students, roll);
+
+                break;
+            case 5:
+                sortByNameAscending(students);
+                cout << "Students Sorted by Name" << endl << endl;
+                break;
+            case 6:
+                sortByMarksDescending(students);
+                cout << "Students Sorted by Marks" << endl << endl;
+                break;
+            case 7:
+                cout << "Exit" << endl;
+                break;
+            default:
+                cout << "Invalid Choice" << endl;
+        };
+    } while (choice != 7);
+    
     return 0;
 }

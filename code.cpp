@@ -76,6 +76,14 @@ void displayStudents(const vector<Student>& students) {
     }
 }
 
+Student* searchStudent(vector<Student>& students, int roll_number) {
+    for(Student& s : students) {
+        if(s.get_roll_number() == roll_number)
+            return &s;
+    }
+    return nullptr;
+}
+
 void addStudent(vector<Student>& students) {
     string name;
     float marks;
@@ -88,20 +96,23 @@ void addStudent(vector<Student>& students) {
     cout << "Enter Marks: ";
     cin >> marks;
 
+    if(marks < 0 || marks > 100) {
+        cout << "Invalid Marks" << endl;
+        return;
+    }
+
     cout << "Enter Roll Number: ";
     cin >> roll_number;
 
-    students.push_back(Student(name, marks, roll_number));
+    Student* s = searchStudent(students, roll_number);
+    if(s) {
+        cout << "Roll Number already exists\nTry again with new details." << endl;
+        return;
+    }
+
+    students.emplace_back(Student(name, marks, roll_number));
 
     cout << "Student Added Successfully" << endl;
-}
-
-Student* searchStudent(vector<Student>& students, int roll_number) {
-    for(Student& s : students) {
-        if(s.get_roll_number() == roll_number)
-            return &s;
-    }
-    return nullptr;
 }
 
 void deleteStudent(vector<Student>& students, int roll_num) {
@@ -179,6 +190,6 @@ int main()
                 cout << "Invalid Choice" << endl;
         };
     } while (choice != 7);
-    
+
     return 0;
 }

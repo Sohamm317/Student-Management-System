@@ -2,6 +2,7 @@
 #include<vector>
 #include<algorithm>
 #include<string>
+#include<limits>
 
 using namespace std;
 
@@ -70,9 +71,10 @@ void displayStudents(const vector<Student>& students) {
     cout << endl << "Student Records:" << endl;
 
     for(const Student& s : students) {
-        cout << "Name        : " << s.get_name() << endl;
-        cout << "Roll Number : " << s.get_roll_number() << endl;
-        cout << "Marks       : " << s.get_marks() << endl << endl << endl;
+        cout << "\n-----------------------------\n";
+        cout << "Name        : " << s.get_name() << '\n';
+        cout << "Roll Number : " << s.get_roll_number() << '\n';
+        cout << "Marks       : " << s.get_marks() << '\n';
     }
 }
 
@@ -90,7 +92,7 @@ void addStudent(vector<Student>& students) {
     int roll_number;
 
     cout << "Enter Name: ";
-    cin.ignore();
+    cin.ignore(numeric_limits<streamsize>::max(), '\n');
     getline(cin, name);
 
     cout << "Enter Marks: ";
@@ -110,7 +112,7 @@ void addStudent(vector<Student>& students) {
         return;
     }
 
-    students.emplace_back(Student(name, marks, roll_number));
+    students.emplace_back(name, marks, roll_number);
 
     cout << "Student Added Successfully" << endl;
 }
@@ -126,6 +128,8 @@ void deleteStudent(vector<Student>& students, int roll_num) {
     cout << "Student Not Found" << endl;
 }
 
+// add option in switch to update marks & fix bugs
+
 int main()
 {
     int choice;
@@ -139,7 +143,8 @@ int main()
         cout << "4. Delete Student" << endl;
         cout << "5. Sort by Name" << endl;
         cout << "6. Sort by Marks" << endl;
-        cout << "7. Exit" << endl;
+        cout << "7. Edit Student" << endl;
+        cout << "8. Exit" << endl;
 
         cout << endl << "Enter Choice : ";
         cin >> choice;
@@ -152,6 +157,7 @@ int main()
                 displayStudents(students);
                 break;
             case 3:
+            {
                 int roll;
                 cout << "Enter Roll Number: ";
                 cin >> roll;
@@ -161,13 +167,18 @@ int main()
                 if(s)
                 {
                     cout << endl << "Student Found" << endl;
-                    cout << "Name: " << s->get_name() << endl;
+                    cout << "Name        : " << s->get_name() << endl;
+                    cout << "Roll Number : " << s->get_roll_number() << endl;
+                    cout << "Marks       : " << s->get_marks() << endl;
+                    
                 } else {
                     cout << "Student Not Found" << endl;
                 }
 
                 break;
+            }
             case 4:
+            {
                 int roll;
                 cout << "Enter Roll Number: ";
                 cin >> roll;
@@ -175,6 +186,7 @@ int main()
                 deleteStudent(students, roll);
 
                 break;
+            }
             case 5:
                 sortByNameAscending(students);
                 cout << "Students Sorted by Name" << endl << endl;
@@ -184,12 +196,33 @@ int main()
                 cout << "Students Sorted by Marks" << endl << endl;
                 break;
             case 7:
-                cout << "Exit" << endl;
+            {
+                int roll;
+                cout << "Enter Roll Number" << endl;
+                cin >> roll;
+                Student* s = searchStudent(students, roll);
+
+                string new_name; float new_marks; int new_rollnumber;
+                cout << "Enter Updated Details: " << endl;
+                
+                cout << "Enter Name: ";
+                cin.ignore(numeric_limits<streamsize>::max(), '\n');
+                getline(cin, new_name);
+
+                cout << "Enter Marks: ";
+                cin >> new_marks;
+
+                cout << "Enter Roll Number: ";
+                cin >> new_rollnumber;
+
+                s->edit_student(new_name, new_marks, new_rollnumber);
+
                 break;
+            }
             default:
                 cout << "Invalid Choice" << endl;
         };
-    } while (choice != 7);
+    } while (choice != 8);
 
     return 0;
 }

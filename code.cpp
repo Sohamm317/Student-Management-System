@@ -54,18 +54,16 @@ const Student* searchStudent(const vector<Student>& students, int roll_number) {
     return nullptr;
 }
 
-bool compare_by_name (const Student &a, const Student &b) {
+bool compareByName (const Student &a, const Student &b) {
     return a.getName() < b.getName();
 }
 
-bool compare_by_marks (const Student &a, const Student &b) {
+bool compareByMarks (const Student &a, const Student &b) {
     return a.getMarks() > b.getMarks();
 }
 
 bool isValidMarks(float marks) {
-    if(marks < 0 || marks > 100)
-        return false;
-    return true;
+    return (marks >= 0 && marks <= 100);
 }
 
 bool isRollNumberUnique(const vector<Student>& students,int roll) {
@@ -73,11 +71,11 @@ bool isRollNumberUnique(const vector<Student>& students,int roll) {
 }
 
 void sortByNameAscending (vector<Student>& students) {
-    sort(students.begin(), students.end(), compare_by_name);
+    sort(students.begin(), students.end(), compareByName);
 }
 
 void sortByMarksDescending (vector<Student>& students) {
-    sort(students.begin(), students.end(), compare_by_marks);
+    sort(students.begin(), students.end(), compareByMarks);
 }
 
 void displayStudent(const Student& s)

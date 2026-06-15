@@ -12,14 +12,9 @@ private:
     float marks;
     int roll_number;
 
-    static int count;
 public:
-    Student (string n = "", float m = 0.0f, int r = 0) : name(n), marks(m), roll_number(r) {
-        count++;
-    }
-    ~Student() {
-        count--;
-    }
+    Student (string n = "", float m = 0.0f, int r = 0) : name(n), marks(m), roll_number(r) {}
+    ~Student() = default;
 
     void update_marks (float new_marks) {
         marks = new_marks;
@@ -39,12 +34,7 @@ public:
         return marks;
     }
 
-    static int get_count() {
-        return count;
-    }
 };
-
-int Student::count = 0;
 
 bool compare_by_name (const Student &a, const Student &b) {
     return a.get_name() < b.get_name();
@@ -86,6 +76,14 @@ Student* searchStudent(vector<Student>& students, int roll_number) {
     return nullptr;
 }
 
+const Student* searchStudent(const vector<Student>& students, int roll_number) {
+    for(const Student& s : students) {
+        if(s.get_roll_number() == roll_number)
+            return &s;
+    }
+    return nullptr;
+}
+
 void addStudent(vector<Student>& students) {
     string name;
     float marks;
@@ -118,7 +116,7 @@ void addStudent(vector<Student>& students) {
 }
 
 void deleteStudent(vector<Student>& students, int roll_num) {
-    for(auto it = students.begin(); it != students.end(); it++) {
+    for(auto it = students.begin(); it != students.end(); ++it) {
         if(it->get_roll_number() == roll_num) {
             students.erase(it);
             cout << "Student Deleted Successfully" << endl;
@@ -128,7 +126,6 @@ void deleteStudent(vector<Student>& students, int roll_num) {
     cout << "Student Not Found" << endl;
 }
 
-// add option in switch to update marks & fix bugs
 
 int main()
 {
@@ -144,7 +141,9 @@ int main()
         cout << "5. Sort by Name" << endl;
         cout << "6. Sort by Marks" << endl;
         cout << "7. Edit Student" << endl;
-        cout << "8. Exit" << endl;
+        cout << "8. Display Student Count" << endl;
+        cout << "9. Update Marks" << endl;
+        cout << "10. Exit" << endl;
 
         cout << endl << "Enter Choice : ";
         cin >> choice;
@@ -202,6 +201,11 @@ int main()
                 cin >> roll;
                 Student* s = searchStudent(students, roll);
 
+                if(!s) {
+                    cout << "Student Not Found" << endl;
+                    break;
+                }
+
                 string new_name; float new_marks; int new_rollnumber;
                 cout << "Enter Updated Details: " << endl;
                 
@@ -212,17 +216,62 @@ int main()
                 cout << "Enter Marks: ";
                 cin >> new_marks;
 
+                if(new_marks < 0 || new_marks > 100) {
+                    cout << "Invalid Marks" << endl;
+                    break;
+                }
+                
                 cout << "Enter Roll Number: ";
                 cin >> new_rollnumber;
 
-                s->edit_student(new_name, new_marks, new_rollnumber);
+                Student* check = searchStudent(students, new_rollnumber);
+                
+                if(check && check != s) {
+                    cout << "Roll Number already exists\nEnter new Roll Number." << endl;
+                    break;
+                }
 
+                s->edit_student(new_name, new_marks, new_rollnumber);
+                
+                cout << "Student Edited Successfully" << endl;
                 break;
             }
+            case 8:
+                cout << "Number of Students: " << students.size() << endl;
+                break;
+            case 9:
+            {
+                int roll; float new_marks;
+                cout << "Enter Roll Number: ";
+                cin >> roll;
+                
+                Student* s = searchStudent(students, roll);
+
+                if(!s) {
+                    cout << "No Student Record" << endl;
+                    break;
+                }
+                
+                cout << "Enter new marks: ";
+                cin >> new_marks;
+                
+                if(new_marks < 0 || new_marks > 100) {
+                    cout << "Invalid Marks" << endl;
+                    break;
+                }
+                
+                s->update_marks(new_marks);
+                
+                cout << "Marks Updated Successfully" << endl;
+                break;
+            }
+            case 10:
+                cout << "Exit" << endl;
+                break;
             default:
                 cout << "Invalid Choice" << endl;
         };
-    } while (choice != 8);
+    } while (choice != 10);
 
     return 0;
 }

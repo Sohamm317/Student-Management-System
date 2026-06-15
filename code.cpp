@@ -13,18 +13,20 @@ private:
     int roll_number;
 
 public:
-    Student (string n = "", float m = 0.0f, int r = 0) : name(n), marks(m), roll_number(r) {}
+    Student (const string& n = "", float m = 0.0f, int r = 0) : name(n), marks(m), roll_number(r) {}
     ~Student() = default;
 
-    void update_marks (float new_marks) {
+    void updateMarks (float new_marks) {
         marks = new_marks;
     }
 
-    void edit_student (string n, float m, int r) {
-        name = n; marks = m; roll_number = r;
+    void editStudent (const string& n, float m, int r) {
+        name = n;
+        marks = m;
+        roll_number = r;
     }
 
-    string get_name() const {
+    const string& get_name() const {
         return name;
     }
     int get_roll_number() const {
@@ -52,6 +54,14 @@ void sortByMarksDescending (vector<Student>& students) {
     sort(students.begin(), students.end(), compare_by_marks);
 }
 
+void displayStudent(const Student& s)
+{
+    cout << "\n-----------------------------\n";
+    cout << "Name        : " << s.get_name() << endl;
+    cout << "Roll Number : " << s.get_roll_number() << endl;
+    cout << "Marks       : " << s.get_marks() << endl;
+}
+
 void displayStudents(const vector<Student>& students) {
     if(students.empty()) {
         cout << endl << "No Students Found" << endl;
@@ -61,10 +71,7 @@ void displayStudents(const vector<Student>& students) {
     cout << endl << "Student Records:" << endl;
 
     for(const Student& s : students) {
-        cout << "\n-----------------------------\n";
-        cout << "Name        : " << s.get_name() << '\n';
-        cout << "Roll Number : " << s.get_roll_number() << '\n';
-        cout << "Marks       : " << s.get_marks() << '\n';
+        displayStudent(s);
     }
 }
 
@@ -161,14 +168,12 @@ int main()
                 cout << "Enter Roll Number: ";
                 cin >> roll;
 
-                Student* s = searchStudent(students, roll);
+                const Student* s = searchStudent(students, roll);
 
                 if(s)
                 {
                     cout << endl << "Student Found" << endl;
-                    cout << "Name        : " << s->get_name() << endl;
-                    cout << "Roll Number : " << s->get_roll_number() << endl;
-                    cout << "Marks       : " << s->get_marks() << endl;
+                    displayStudent(*s);
                     
                 } else {
                     cout << "Student Not Found" << endl;
@@ -231,7 +236,7 @@ int main()
                     break;
                 }
 
-                s->edit_student(new_name, new_marks, new_rollnumber);
+                s->editStudent(new_name, new_marks, new_rollnumber);
                 
                 cout << "Student Edited Successfully" << endl;
                 break;
@@ -260,7 +265,7 @@ int main()
                     break;
                 }
                 
-                s->update_marks(new_marks);
+                s->updateMarks(new_marks);
                 
                 cout << "Marks Updated Successfully" << endl;
                 break;

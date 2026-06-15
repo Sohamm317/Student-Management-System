@@ -26,24 +26,24 @@ public:
         roll_number = r;
     }
 
-    const string& get_name() const {
+    const string& getName() const {
         return name;
     }
-    int get_roll_number() const {
+    int getRollNumber() const {
         return roll_number;
     }
-    float get_marks() const {
+    float getMarks() const {
         return marks;
     }
 
 };
 
 bool compare_by_name (const Student &a, const Student &b) {
-    return a.get_name() < b.get_name();
+    return a.getName() < b.getName();
 }
 
 bool compare_by_marks (const Student &a, const Student &b) {
-    return a.get_marks() > b.get_marks();
+    return a.getMarks() > b.getMarks();
 }
 
 void sortByNameAscending (vector<Student>& students) {
@@ -57,9 +57,9 @@ void sortByMarksDescending (vector<Student>& students) {
 void displayStudent(const Student& s)
 {
     cout << "\n-----------------------------\n";
-    cout << "Name        : " << s.get_name() << endl;
-    cout << "Roll Number : " << s.get_roll_number() << endl;
-    cout << "Marks       : " << s.get_marks() << endl;
+    cout << "Name        : " << s.getName() << endl;
+    cout << "Roll Number : " << s.getRollNumber() << endl;
+    cout << "Marks       : " << s.getMarks() << endl;
 }
 
 void displayStudents(const vector<Student>& students) {
@@ -77,7 +77,7 @@ void displayStudents(const vector<Student>& students) {
 
 Student* searchStudent(vector<Student>& students, int roll_number) {
     for(Student& s : students) {
-        if(s.get_roll_number() == roll_number)
+        if(s.getRollNumber() == roll_number)
             return &s;
     }
     return nullptr;
@@ -85,7 +85,7 @@ Student* searchStudent(vector<Student>& students, int roll_number) {
 
 const Student* searchStudent(const vector<Student>& students, int roll_number) {
     for(const Student& s : students) {
-        if(s.get_roll_number() == roll_number)
+        if(s.getRollNumber() == roll_number)
             return &s;
     }
     return nullptr;
@@ -124,7 +124,7 @@ void addStudent(vector<Student>& students) {
 
 void deleteStudent(vector<Student>& students, int roll_num) {
     for(auto it = students.begin(); it != students.end(); ++it) {
-        if(it->get_roll_number() == roll_num) {
+        if(it->getRollNumber() == roll_num) {
             students.erase(it);
             cout << "Student Deleted Successfully" << endl;
             return;

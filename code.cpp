@@ -38,12 +38,38 @@ public:
 
 };
 
+Student* searchStudent(vector<Student>& students, int roll_number) {
+    for(Student& s : students) {
+        if(s.getRollNumber() == roll_number)
+            return &s;
+    }
+    return nullptr;
+}
+
+const Student* searchStudent(const vector<Student>& students, int roll_number) {
+    for(const Student& s : students) {
+        if(s.getRollNumber() == roll_number)
+            return &s;
+    }
+    return nullptr;
+}
+
 bool compare_by_name (const Student &a, const Student &b) {
     return a.getName() < b.getName();
 }
 
 bool compare_by_marks (const Student &a, const Student &b) {
     return a.getMarks() > b.getMarks();
+}
+
+bool isValidMarks(float marks) {
+    if(marks < 0 || marks > 100)
+        return false;
+    return true;
+}
+
+bool isRollNumberUnique(const vector<Student>& students,int roll) {
+    return !searchStudent(students, roll);
 }
 
 void sortByNameAscending (vector<Student>& students) {
@@ -75,22 +101,6 @@ void displayStudents(const vector<Student>& students) {
     }
 }
 
-Student* searchStudent(vector<Student>& students, int roll_number) {
-    for(Student& s : students) {
-        if(s.getRollNumber() == roll_number)
-            return &s;
-    }
-    return nullptr;
-}
-
-const Student* searchStudent(const vector<Student>& students, int roll_number) {
-    for(const Student& s : students) {
-        if(s.getRollNumber() == roll_number)
-            return &s;
-    }
-    return nullptr;
-}
-
 void addStudent(vector<Student>& students) {
     string name;
     float marks;
@@ -103,7 +113,7 @@ void addStudent(vector<Student>& students) {
     cout << "Enter Marks: ";
     cin >> marks;
 
-    if(marks < 0 || marks > 100) {
+    if(!isValidMarks(marks)) {
         cout << "Invalid Marks" << endl;
         return;
     }
@@ -111,8 +121,7 @@ void addStudent(vector<Student>& students) {
     cout << "Enter Roll Number: ";
     cin >> roll_number;
 
-    Student* s = searchStudent(students, roll_number);
-    if(s) {
+    if(!isRollNumberUnique(students, roll_number)) {
         cout << "Roll Number already exists\nTry again with new details." << endl;
         return;
     }
@@ -221,7 +230,7 @@ int main()
                 cout << "Enter Marks: ";
                 cin >> new_marks;
 
-                if(new_marks < 0 || new_marks > 100) {
+                if(!isValidMarks(new_marks)) {
                     cout << "Invalid Marks" << endl;
                     break;
                 }
@@ -260,7 +269,7 @@ int main()
                 cout << "Enter new marks: ";
                 cin >> new_marks;
                 
-                if(new_marks < 0 || new_marks > 100) {
+                if(!isValidMarks(new_marks)) {
                     cout << "Invalid Marks" << endl;
                     break;
                 }

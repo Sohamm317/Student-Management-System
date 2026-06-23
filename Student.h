@@ -22,3 +22,5 @@ public:
 };
 
 #endif
+
+// Contains the Student Class and function declarations

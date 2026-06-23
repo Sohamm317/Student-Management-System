@@ -1,7 +1,7 @@
-#include <Student.h>
+#include "Student.h"
 
 // constructor
-Student::Student (const std::string& n = "", float m = 0.0f, int r = 0)
+Student::Student (const std::string& n, float m, int r)
     : name(n), marks(m), roll_number(r) {}
 
 // member functions

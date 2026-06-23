@@ -1,6 +1,6 @@
 // contains all the functions
 
-#include<StudentManager.h>
+#include"StudentManager.h"
 
 #include<iostream>
 #include<algorithm>

@@ -10,7 +10,7 @@ private:
     int roll_number;
 
 public:
-    Student (const std::string& n = "", float m = 0.0f, int r = 0) : name(n), marks(m), roll_number(r) {}
+    Student (const std::string& n = "", float m = 0.0f, int r = 0);
     ~Student() = default;
 
     void updateMarks (float new_marks);

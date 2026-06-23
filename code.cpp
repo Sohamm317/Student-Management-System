@@ -6,37 +6,37 @@
 
 using namespace std;
 
-class Student {
-private:
-    string name;
-    float marks;
-    int roll_number;
+// class Student {
+// private:
+//     string name;
+//     float marks;
+//     int roll_number;
 
-public:
-    Student (const string& n = "", float m = 0.0f, int r = 0) : name(n), marks(m), roll_number(r) {}
-    ~Student() = default;
+// public:
+//     Student (const string& n = "", float m = 0.0f, int r = 0) : name(n), marks(m), roll_number(r) {}
+//     ~Student() = default;
 
-    void updateMarks (float new_marks) {
-        marks = new_marks;
-    }
+//     void updateMarks (float new_marks) {
+//         marks = new_marks;
+//     }
 
-    void editStudent (const string& n, float m, int r) {
-        name = n;
-        marks = m;
-        roll_number = r;
-    }
+//     void editStudent (const string& n, float m, int r) {
+//         name = n;
+//         marks = m;
+//         roll_number = r;
+//     }
 
-    const string& getName() const {
-        return name;
-    }
-    int getRollNumber() const {
-        return roll_number;
-    }
-    float getMarks() const {
-        return marks;
-    }
+//     const string& getName() const {
+//         return name;
+//     }
+//     int getRollNumber() const {
+//         return roll_number;
+//     }
+//     float getMarks() const {
+//         return marks;
+//     }
 
-};
+// };
 
 Student* searchStudent(vector<Student>& students, int roll_number) {
     for(Student& s : students) {

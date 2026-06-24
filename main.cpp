@@ -4,27 +4,31 @@
 
 #include "Student.h"
 #include "StudentManager.h"
+#include "FileHandler.h"
 
 using namespace std;
 
 int main() {
     int choice;
+
     vector<Student> students; 
 
-    do {
-        cout << endl << "Student Management System" << endl;
-        cout << "1. Add Student" << endl;
-        cout << "2. Display Students" << endl;
-        cout << "3. Search Student" << endl;
-        cout << "4. Delete Student" << endl;
-        cout << "5. Sort by Name" << endl;
-        cout << "6. Sort by Marks" << endl;
-        cout << "7. Edit Student" << endl;
-        cout << "8. Display Student Count" << endl;
-        cout << "9. Update Marks" << endl;
-        cout << "10. Exit" << endl;
+    loadFromFile(students);
 
-        cout << endl << "Enter Choice : ";
+    do {
+        cout << "\nStudent Management System\n";
+        cout << "1. Add Student\n";
+        cout << "2. Display Students\n";
+        cout << "3. Search Student\n";
+        cout << "4. Delete Student\n";
+        cout << "5. Sort by Name\n";
+        cout << "6. Sort by Marks\n";
+        cout << "7. Edit Student\n";
+        cout << "8. Display Student Count\n";
+        cout << "9. Update Marks\n";
+        cout << "10. Exit\n";
+
+        cout << "\nEnter Choice : ";
         cin >> choice;
 
         switch(choice) {
@@ -46,11 +50,11 @@ int main() {
 
                 if(s)
                 {
-                    cout << endl << "Student Found" << endl;
+                    cout << "\nStudent Found\n";
                     displayStudent(*s);
                     
                 } else {
-                    cout << "Student Not Found" << endl;
+                    cout << "Student Not Found\n";
                 }
 
                 break;
@@ -69,28 +73,28 @@ int main() {
             
             case 5:
                 sortByNameAscending(students);
-                cout << "Students Sorted by Name" << endl << endl;
+                cout << "Students Sorted by Name\n";
                 break;
             
             case 6:
                 sortByMarksDescending(students);
-                cout << "Students Sorted by Marks" << endl << endl;
+                cout << "Students Sorted by Marks\n";
                 break;
             
             case 7:
             {
                 int roll;
-                cout << "Enter Roll Number" << endl;
+                cout << "Enter Roll Number\n";
                 cin >> roll;
                 Student* s = searchStudent(students, roll);
 
                 if(!s) {
-                    cout << "Student Not Found" << endl;
+                    cout << "Student Not Found\n";
                     break;
                 }
 
                 string new_name; float new_marks; int new_rollnumber;
-                cout << "Enter Updated Details: " << endl;
+                cout << "Enter Updated Details: \n";
                 
                 cout << "Enter Name: ";
                 cin.ignore(numeric_limits<streamsize>::max(), '\n');
@@ -100,7 +104,7 @@ int main() {
                 cin >> new_marks;
 
                 if(!isValidMarks(new_marks)) {
-                    cout << "Invalid Marks" << endl;
+                    cout << "Invalid Marks\n";
                     break;
                 }
                 
@@ -110,18 +114,18 @@ int main() {
                 Student* check = searchStudent(students, new_rollnumber);
                 
                 if(check && check != s) {
-                    cout << "Roll Number already exists\nEnter new Roll Number." << endl;
+                    cout << "Roll Number already exists\nEnter new Roll Number.\n";
                     break;
                 }
 
                 s->editStudent(new_name, new_marks, new_rollnumber);
                 
-                cout << "Student Edited Successfully" << endl;
+                cout << "Student Edited Successfully\n";
                 break;
             }
             
             case 8:
-                cout << "Number of Students: " << students.size() << endl;
+                cout << "Number of Students: " << students.size() << "\n";
                 break;
             
             case 9:
@@ -133,7 +137,7 @@ int main() {
                 Student* s = searchStudent(students, roll);
 
                 if(!s) {
-                    cout << "No Student Record" << endl;
+                    cout << "No Student Record\n";
                     break;
                 }
                 
@@ -141,22 +145,24 @@ int main() {
                 cin >> new_marks;
                 
                 if(!isValidMarks(new_marks)) {
-                    cout << "Invalid Marks" << endl;
+                    cout << "Invalid Marks\n";
                     break;
                 }
                 
                 s->updateMarks(new_marks);
                 
-                cout << "Marks Updated Successfully" << endl;
+                cout << "Marks Updated Successfully\n";
                 break;
             }
             
             case 10:
-                cout << "Exit" << endl;
+                saveToFile(students);
+                cout << "Data Saved Succesfully\n";
+                cout << "Exit\n";
                 break;
             
             default:
-                cout << "Invalid Choice" << endl;
+                cout << "Invalid Choice\n";
         };
     } while (choice != 10);
 

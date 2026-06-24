@@ -51,18 +51,18 @@ void sortByMarksDescending (vector<Student>& students) {
 void displayStudent(const Student& s)
 {
     cout << "\n-----------------------------\n";
-    cout << "Name        : " << s.getName() << endl;
-    cout << "Roll Number : " << s.getRollNumber() << endl;
-    cout << "Marks       : " << s.getMarks() << endl;
+    cout << "Name        : " << s.getName() << "\n";
+    cout << "Roll Number : " << s.getRollNumber() << "\n";
+    cout << "Marks       : " << s.getMarks() << "\n";
 }
 
 void displayStudents(const vector<Student>& students) {
     if(students.empty()) {
-        cout << endl << "No Students Found" << endl;
+        cout << "\nNo Students Found\n";
         return;
     }
 
-    cout << endl << "Student Records:" << endl;
+    cout << "\nStudent Records:\n";
 
     for(const Student& s : students) {
         displayStudent(s);
@@ -82,7 +82,7 @@ void addStudent(vector<Student>& students) {
     cin >> marks;
 
     if(!isValidMarks(marks)) {
-        cout << "Invalid Marks" << endl;
+        cout << "Invalid Marks\n";
         return;
     }
 
@@ -90,22 +90,22 @@ void addStudent(vector<Student>& students) {
     cin >> roll_number;
 
     if(!isRollNumberUnique(students, roll_number)) {
-        cout << "Roll Number already exists\nTry again with new details." << endl;
+        cout << "Roll Number already exists\nTry again with new details.\n";
         return;
     }
 
     students.emplace_back(name, marks, roll_number);
 
-    cout << "Student Added Successfully" << endl;
+    cout << "Student Added Successfully\n";
 }
 
 void deleteStudent(vector<Student>& students, int roll_num) {
     for(auto it = students.begin(); it != students.end(); ++it) {
         if(it->getRollNumber() == roll_num) {
             students.erase(it);
-            cout << "Student Deleted Successfully" << endl;
+            cout << "Student Deleted Successfully\n";
             return;
         }
     }
-    cout << "Student Not Found" << endl;
+    cout << "Student Not Found\n";
 }
